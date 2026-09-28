@@ -1,104 +1,47 @@
-<!DOCTYPE html>
-<html lang="ja">
+@extends('layouts.app')
 
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Contact Form</title>
-  <link rel="stylesheet" href="{{ asset('css/sanitize.css') }}" />
-  <link rel="stylesheet" href="{{ asset('css/index.css') }}" />
-</head>
+@section('css')
+    <link rel="stylesheet" href="{{ asset('css/index.css') }}">
+@endsection
 
-<body>
-  <header class="header">
-    <div class="header__inner">
-      <a class="header__logo" href="/">
-        Contact Form
-      </a>
+@section('content')
+    <div class="index__content">
+        <div class="index__heading">
+            <h2>お問い合わせフォーム</h2>
+        </div>
+        <form class="form" action="/contacts/confirm" method="post">
+            @csrf
+            <div class="form__group">
+                <label class="form__label" for="name">お名前</label>
+                <input class="form__input" type="text" name="name" id="name" value="{{ old('name') }}" required />
+                @error('name')
+                    <p class="form__error">{{ $message }}</p>
+                @enderror
+            </div>
+            <div class="form__group">
+                <label class="form__label" for="email">メールアドレス</label>
+                <input class="form__input" type="email" name="email" id="email" value="{{ old('email') }}" required />
+                @error('email')
+                    <p class="form__error">{{ $message }}</p>
+                @enderror
+            </div>
+            <div class="form__group">
+                <label class="form__label" for="tel">電話番号</label>
+                <input class="form__input" type="tel" name="tel" id="tel" value="{{ old('tel') }}" required />
+                @error('tel')
+                    <p class="form__error">{{ $message }}</p>
+                @enderror
+            </div>
+            <div class="form__group">
+                <label class="form__label" for="content">お問い合わせ内容</label>
+                <textarea class="form__textarea" name="content" id="content">{{ old('content') }}</textarea>
+                @error('content')
+                    <p class="form__error">{{ $message }}</p>
+                @enderror
+            </div>
+            <div class="form__button">
+                <button class="form__button-submit" type="submit">確認</button>
+            </div>
+        </form>
     </div>
-  </header>
-
-  <main>
-    <div class="contact-form__content">
-      <div class="contact-form__heading">
-        <h2>お問い合わせ</h2>
-      </div>
-      <form class="form" action="/contacts/confirm" method="post">
-        @csrf
-        <div class="form__group">
-          <div class="form__group-title">
-            <span class="form__label--item">お名前</span>
-            <span class="form__label--required">必須</span>
-          </div>
-          <div class="form__group-content">
-            <div class="form__input--text">
-              <input type="text" name="name" placeholder="テスト太郎" value="{{ old('name') }}" />
-            </div>
-            <div class="form__error">
-              <!--バリデーション機能を実装したら記述します。-->
-              @error('name')
-                <p>{{ $message }}</p>
-              @enderror
-            </div>
-          </div>
-        </div>
-        <div class="form__group">
-          <div class="form__group-title">
-            <span class="form__label--item">メールアドレス</span>
-            <span class="form__label--required">必須</span>
-          </div>
-          <div class="form__group-content">
-            <div class="form__input--text">
-              <input type="email" name="email" placeholder="test@example.com" value="{{ old('email') }}" />
-            </div>
-            <div class="form__error">
-              <!--バリデーション機能を実装したら記述します。-->
-              @error('email')
-                <p>{{ $message }}</p>
-              @enderror
-            </div>
-          </div>
-        </div>
-        <div class="form__group">
-          <div class="form__group-title">
-            <span class="form__label--item">電話番号</span>
-            <span class="form__label--required">必須</span>
-          </div>
-          <div class="form__group-content">
-            <div class="form__input--text">
-              <input type="tel" name="tel" placeholder="09012345678" value="{{ old('tel') }}" />
-            </div>
-            <div class="form__error">
-              <!--バリデーション機能を実装したら記述します。-->
-              @error('tel')
-                <p>{{ $message }}</p>
-              @enderror
-            </div>
-          </div>
-        </div>
-        <div class="form__group">
-          <div class="form__group-title">
-            <span class="form__label--item">お問い合わせ内容</span>
-          </div>
-          <div class="form__group-content">
-            <div class="form__input--textarea">
-              <textarea name="content" placeholder="資料をいただきたいです">{{ old('content') }}</textarea>
-            </div>
-            <div class="form__error">
-              <!--バリデーション機能を実装したら記述します。-->
-              @error('content')
-                <p>{{ $message }}</p>
-              @enderror
-            </div>
-          </div>
-        </div>
-        <div class="form__button">
-          <button class="form__button-submit" type="submit">送信</button>
-        </div>
-      </form>
-    </div>
-  </main>
-</body>
-
-</html>
+@endsection
