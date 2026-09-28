@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Models\Contact;
 
+use App\Http\Requests\ContactRequest;
+
 class ContactController extends Controller
 {
     // indexメソッドを作成
@@ -14,14 +16,16 @@ class ContactController extends Controller
     return view('index'); //indexを表示
     }
 
-    public function confirm(Request $request)
+    // confirmメソッドを作成
+    public function confirm(ContactRequest $request)
     {
        $contact = $request->only(['name', 'email', 'tel', 'content']);
     //    return $contact;
         return view('confirm', compact('contact'));
     }
 
-    public function store(Request $request)
+    //  storeメソッドを作成
+    public function store(ContactRequest $request)
     {
         // フォームから送信されたデータを取得
         $contact = $request->only(['name', 'email', 'tel', 'content']);
